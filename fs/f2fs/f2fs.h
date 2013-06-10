@@ -900,7 +900,7 @@ static inline int f2fs_readonly(struct super_block *sb)
 /*
  * file.c
  */
-int f2fs_sync_file(struct file *, loff_t, loff_t, int);
+int f2fs_sync_file(struct file *, int);
 void truncate_data_blocks(struct dnode_of_data *);
 void f2fs_truncate(struct inode *);
 int f2fs_setattr(struct dentry *, struct iattr *);
