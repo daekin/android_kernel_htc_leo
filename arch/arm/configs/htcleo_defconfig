@@ -1,6 +1,6 @@
 #
 # Automatically generated make config: don't edit
-# Linux/arm 3.0.84 Kernel Configuration
+# Linux/arm 3.0.91 Kernel Configuration
 #
 CONFIG_ARM=y
 CONFIG_SYS_SUPPORTS_APM_EMULATION=y
@@ -974,9 +974,12 @@ CONFIG_DNS_RESOLVER=y
 # CONFIG_IRDA is not set
 CONFIG_BT=y
 CONFIG_BT_L2CAP=y
-# CONFIG_BT_SCO is not set
-# CONFIG_BT_RFCOMM is not set
-# CONFIG_BT_BNEP is not set
+CONFIG_BT_SCO=y
+CONFIG_BT_RFCOMM=y
+CONFIG_BT_RFCOMM_TTY=y
+CONFIG_BT_BNEP=y
+# CONFIG_BT_BNEP_MC_FILTER is not set
+# CONFIG_BT_BNEP_PROTO_FILTER is not set
 CONFIG_BT_HIDP=y
 
 #
@@ -985,7 +988,12 @@ CONFIG_BT_HIDP=y
 # CONFIG_BT_HCISMD is not set
 # CONFIG_BT_HCIBTUSB is not set
 # CONFIG_BT_HCIBTSDIO is not set
-# CONFIG_BT_HCIUART is not set
+CONFIG_BT_HCIUART=y
+CONFIG_BT_HCIUART_H4=y
+# CONFIG_BT_HCIUART_BCSP is not set
+# CONFIG_BT_HCIUART_ATH3K is not set
+CONFIG_BT_HCIUART_LL=y
+# CONFIG_BT_HCIUART_IBS is not set
 # CONFIG_BT_HCIBCM203X is not set
 # CONFIG_BT_HCIBPA10X is not set
 # CONFIG_BT_MSM_SLEEP is not set
@@ -993,7 +1001,6 @@ CONFIG_BT_HIDP=y
 # CONFIG_BT_HCIVHCI is not set
 # CONFIG_BT_MRVL is not set
 # CONFIG_MSM_BT_POWER is not set
-CONFIG_BT_HID_BRCM=y
 # CONFIG_AF_RXRPC is not set
 CONFIG_FIB_RULES=y
 CONFIG_WIRELESS=y
@@ -2621,7 +2628,8 @@ CONFIG_HAVE_ARCH_KGDB=y
 # CONFIG_KGDB is not set
 # CONFIG_TEST_KSTRTOX is not set
 # CONFIG_STRICT_DEVMEM is not set
-CONFIG_ARM_UNWIND=y
+# CONFIG_ARM_UNWIND is not set
+CONFIG_FRAME_POINTER=y
 # CONFIG_DEBUG_USER is not set
 # CONFIG_DEBUG_LL is not set
 # CONFIG_OC_ETM is not set
