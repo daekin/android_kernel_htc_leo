@@ -2165,6 +2165,9 @@ static void ftdi_set_termios(struct tty_struct *tty,
 	}
 
 	cflag = termios->c_cflag;
+	
+	if (!old_termios)
+                goto no_skip;
 
 	if (!old_termios)
 		goto no_skip;

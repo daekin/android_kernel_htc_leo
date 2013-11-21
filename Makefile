@@ -1,8 +1,8 @@
 VERSION = 3
 PATCHLEVEL = 0
-SUBLEVEL = 91
+SUBLEVEL = 101
 EXTRAVERSION =
-NAME = Sneaky Weasel
+NAME = Sodden Ben Lomond
 
 # *DOCUMENTATION*
 # To see a list of typical targets execute "make help"
@@ -195,7 +195,7 @@ SUBARCH := arm
 SUBARCH := arm
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?= $(SUBARCH)
-CROSS_COMPILE	?= arm-linux-androideabi-
+CROSS_COMPILE	?= arm-eabi-
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
 # Architecture as present in compile.h
@@ -333,7 +333,7 @@ include $(srctree)/scripts/Kbuild.include
 
 AS		= $(CROSS_COMPILE)as
 LD		= $(CROSS_COMPILE)ld
-CC		= $(CROSS_COMPILE)gcc
+REAL_CC		= $(CROSS_COMPILE)gcc
 CPP		= $(CC) -E
 AR		= $(CROSS_COMPILE)ar
 NM		= $(CROSS_COMPILE)nm
@@ -350,16 +350,15 @@ CHECK		= sparse
 
 # Use the wrapper for the compiler.  This wrapper scans for new
 # warnings and causes the build to stop upon encountering them.
-# CC		= $(srctree)/scripts/gcc-wrapper.py $(REAL_CC)
+CC		= $(REAL_CC) 
 
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
-MODFLAGS	= -DMODULE -march=armv7-a -mtune=cortex-a8 -mfpu=neon -ftree-vectorize -ffast-math -fsingle-precision-constant -fno-pic
-CFLAGS_MODULE   = $(MODFLAGS)
-AFLAGS_MODULE   = $(MODFLAGS) -pipe
-LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
-CFLAGS_KERNEL	= -march=armv7-a -mtune=cortex-a8 -mfpu=neon -ftree-vectorize -ffast-math -fsingle-precision-constant
-AFLAGS_KERNEL	= -march=armv7-a -mtune=cortex-a8 -mfpu=neon -ftree-vectorize -ffast-math -fsingle-precision-constant -pipe
+CFLAGS_MODULE   =
+AFLAGS_MODULE   =
+LDFLAGS_MODULE  =
+CFLAGS_KERNEL	=
+AFLAGS_KERNEL	=
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
 
@@ -376,7 +375,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
-		   -fno-delete-null-pointer-checks
+                   -fno-delete-null-pointer-checks 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=
 KBUILD_AFLAGS   := -D__ASSEMBLY__
@@ -413,7 +412,7 @@ export RCS_TAR_IGNORE := --exclude SCCS --exclude BitKeeper --exclude .svn --exc
 
 # ===========================================================================
 # Rules shared between *config targets and build targets
-
+# Check
 # Basic helpers built in scripts/
 PHONY += scripts_basic
 scripts_basic:

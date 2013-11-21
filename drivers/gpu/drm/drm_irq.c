@@ -997,6 +997,10 @@ EXPORT_SYMBOL(drm_vblank_pre_modeset);
 void drm_vblank_post_modeset(struct drm_device *dev, int crtc)
 {
 	unsigned long irqflags;
+	
+	/* vblank is not initialized (IRQ not installed ?), or has been freed */
+        if (!dev->num_crtcs)
+                return;
 
 	/* vblank is not initialized (IRQ not installed ?), or has been freed */
 	if (!dev->num_crtcs)
