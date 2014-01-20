@@ -78,10 +78,7 @@
 #include "footswitch.h"
 #include "pm.h"
 #include "pm-boot.h"
-
-#ifdef CONFIG_ION
 #include <linux/ion.h>
-#endif
 
 #define ATAG_MAGLDR_BOOT    0x4C47414D
 struct tag_magldr_entry
@@ -628,13 +625,13 @@ static struct msm_otg_platform_data msm_otg_pdata = {
 	.se1_gating		= SE1_GATING_DISABLE,
 };
 #else
-//static int htcleo_phy_init_seq[] ={0x0C, 0x31, 0x30, 0x32, 0x1D, 0x0D, 0x1D, 0x10, -1};
+static int htcleo_phy_init_seq[] ={0x0C, 0x31, 0x30, 0x32, 0x1D, 0x0D, 0x1D, 0x10, -1};
 
-//static struct msm_otg_platform_data msm_otg_pdata = {
-//	.phy_init_seq		= htcleo_phy_init_seq,
-//	.mode			= USB_PERIPHERAL,
-//	.otg_control		= OTG_PHY_CONTROL,
-//};
+static struct msm_otg_platform_data msm_otg_pdata = {
+	.phy_init_seq		= htcleo_phy_init_seq,
+	.mode			= USB_PERIPHERAL,
+	.otg_control		= OTG_PHY_CONTROL,
+};
 #endif
 
 #if 0
@@ -724,7 +721,7 @@ static void htcleo_add_usb_devices(void)
 	platform_device_register(&rndis_device);
 #endif
 #endif
-//	msm_device_otg.dev.platform_data = &msm_otg_pdata;
+	msm_device_otg.dev.platform_data = &msm_otg_pdata;
 	//msm_device_gadget_peripheral.dev.platform_data = &msm_gadget_pdata;
 	msm_device_gadget_peripheral.dev.parent = &msm_device_otg.dev;
 	usb_gpio_init();
@@ -1214,10 +1211,10 @@ static struct platform_device android_pmem_venc_device = {
 #define MSM_ION_HEAP_NUM 1
 #endif
 
-#define MSM_ION_CAMERA_SIZE 0x2800000
-#define MSM_ION_ROTATOR_SIZE 0x2C0000
+#define MSM_ION_CAMERA_SIZE 0x2000
+#define MSM_ION_ROTATOR_SIZE 0x2000
 #define MSM_ION_SF_SIZE 0x2000000
-#define MSM_ION_AUDIO_SIZE 0x700000
+#define MSM_ION_AUDIO_SIZE 0x2000
 
 #ifdef CONFIG_MSM_MULTIMEDIA_USE_ION
 static struct ion_co_heap_pdata co_ion_pdata = {
@@ -1526,10 +1523,11 @@ static struct platform_device *devices[] __initdata =
 	&msm_device_nand,
 	&msm_device_smd,
 	&msm_device_rtc,
+#ifndef CONFIG_ION_MSM
 	&android_pmem_device,
 	&android_pmem_adsp_device,
 	&android_pmem_venc_device,
-#ifdef CONFIG_ION_MSM
+#else
 	&ion_dev,
 #endif
 	&msm_device_i2c,
@@ -1821,6 +1819,10 @@ static void __init htcleo_init(void)
 
 #ifdef CONFIG_SERIAL_MSM_HS
 	msm_device_uart_dm1.dev.platform_data = &msm_uart_dm1_pdata;
+#if 0
+	msm_device_uart_dm1.name = "msm_serial_hs_brcm"; /* for bcm */
+	msm_device_uart_dm1.resource[3].end = 6;
+#endif
 #endif
 
 	config_gpio_table(bt_gpio_table, ARRAY_SIZE(bt_gpio_table));
@@ -1927,3 +1929,4 @@ MACHINE_START(HTCLEO, "htcleo")
 	.timer		= &msm_timer,
 	.init_early     = htcleo_init_early
 MACHINE_END
+
