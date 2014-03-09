@@ -1,2 +1,2 @@
-export CROSS_COMPILE=~/android/ndk/android-ndk-r9c/toolchains/arm-linux-androideabi-4.6/prebuilt/linux-x86/bin/arm-linux-androideabi-
-
+export ARCH=arm
+export CROSS_COMPILE=~/android/toolchains/arm-cortex_a8-linux-gnueabi-linaro_4.8.3-2014.02/bin/arm-cortex_a8-linux-gnueabi-
